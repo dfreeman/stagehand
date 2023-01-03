@@ -108,7 +108,7 @@ describe('Unit | FunctionHandleRegistry', () => {
       expect(registry.dehydrate([f, g, f])).to.deep.equal([
         { '--stagehand-function-handle': 0 },
         { '--stagehand-function-handle': 1 },
-        { '--stagehand-function-handle': 0 }
+        { '--stagehand-function-handle': 0 },
       ]);
     });
   });

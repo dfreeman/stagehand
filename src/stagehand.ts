@@ -109,6 +109,6 @@ export default class Stagehand {
 
     disconnect: () => {
       setTimeout(() => this.shutdown());
-    }
+    },
   };
 }

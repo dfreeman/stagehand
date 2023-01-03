@@ -25,7 +25,7 @@ function makeProxy<T extends object>() {
   let proxy = new Proxy<T>({} as T, {
     get(_, key: keyof T) {
       return target![key];
-    }
+    },
   });
 
   return { proxy, setTarget, clearTarget };

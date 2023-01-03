@@ -55,7 +55,7 @@ export async function connect<T>(endpoint: MessageEndpoint): Promise<Remote<T>> 
 
   for (let method of methods) {
     Object.defineProperty(StagehandRemote.prototype, method, {
-      value: (...args: unknown[]) => stagehand.call(method as never, args)
+      value: (...args: unknown[]) => stagehand.call(method as never, args),
     });
   }
 

@@ -10,16 +10,16 @@ export function connect<T>(worker: Worker) {
 
 export function endpointForWorker(worker: Worker): MessageEndpoint {
   return {
-    onMessage: callback => worker.addEventListener('message', event => callback(event.data)),
-    sendMessage: message => worker.postMessage(message),
-    disconnect: () => worker.terminate()
+    onMessage: (callback) => worker.addEventListener('message', (event) => callback(event.data)),
+    sendMessage: (message) => worker.postMessage(message),
+    disconnect: () => worker.terminate(),
   };
 }
 
 export function endpointForParent(): MessageEndpoint {
   return {
-    onMessage: callback => addEventListener('message', event => callback(event.data)),
-    sendMessage: message => postMessage(message),
-    disconnect: () => close()
+    onMessage: (callback) => addEventListener('message', (event) => callback(event.data)),
+    sendMessage: (message) => postMessage(message),
+    disconnect: () => close(),
   };
 }

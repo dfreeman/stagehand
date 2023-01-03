@@ -8,7 +8,7 @@
   "author": "Dan Freeman <dfreeman@salsify.com>",
   "license": "MIT",
   "scripts": {
-    "lint": "eslint --ext ts,js .",
+    "lint": "prettier --check . && eslint .",
     "test": "mocha -r ts-node/register 'tests/**/*.ts'",
     "test:watch": "mocha --watch --watch-extensions ts -r ts-node/register 'tests/**/*.ts'",
     "prepublishOnly": "tsc -p tsconfig.publish.json",
@@ -27,7 +27,7 @@
     "chai": "^4.2.0",
     "eslint": "^8.31.0",
     "mocha": "^5.2.0",
-    "prettier": "^1.14.3",
+    "prettier": "^2.8.1",
     "rimraf": "^2.6.2",
     "ts-node": "^7.0.1",
     "typescript": "^3.1.3",

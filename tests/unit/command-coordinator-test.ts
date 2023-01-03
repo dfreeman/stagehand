@@ -16,20 +16,20 @@ describe('Unit | CommandCoordinator', () => {
   it('sends commands to the given endpoint', async () => {
     let { endpoint, coordinator } = makeCoordinator<{ go(a: number, callback?: () => string): void }>();
     let lastMessage: unknown;
-    endpoint.onMessage(message => (lastMessage = message));
+    endpoint.onMessage((message) => (lastMessage = message));
 
     coordinator.sendCommand('go', 1);
     expect(lastMessage).to.deep.equal({
       '--stagehand-command': 0,
       name: 'go',
-      args: [1]
+      args: [1],
     });
 
     coordinator.sendCommand('go', 1, () => 'ok');
     expect(lastMessage).to.deep.equal({
       '--stagehand-command': 1,
       name: 'go',
-      args: [1, { '--stagehand-function-handle': 0 }]
+      args: [1, { '--stagehand-function-handle': 0 }],
     });
   });
 
@@ -54,7 +54,7 @@ describe('Unit | CommandCoordinator', () => {
     try {
       await promise;
       expect.fail();
-    } catch (error) {
+    } catch (error: any) {
       expect(error.message).to.equal('💥');
     }
   });
@@ -78,11 +78,11 @@ describe('Unit | CommandCoordinator', () => {
     let { endpoint } = makeCoordinator({
       inc(a: number) {
         return a + 1;
-      }
+      },
     });
 
     let lastMessage: unknown;
-    endpoint.onMessage(message => (lastMessage = message));
+    endpoint.onMessage((message) => (lastMessage = message));
     endpoint.sendMessage({ '--stagehand-command': 123, name: 'inc', args: [1] });
 
     await null;
@@ -94,11 +94,11 @@ describe('Unit | CommandCoordinator', () => {
     let { endpoint } = makeCoordinator({
       boom() {
         throw new Error('💥');
-      }
+      },
     });
 
     let lastMessage: unknown;
-    endpoint.onMessage(message => (lastMessage = message));
+    endpoint.onMessage((message) => (lastMessage = message));
     endpoint.sendMessage({ '--stagehand-command': 789, name: 'boom', args: [] });
 
     await null;
