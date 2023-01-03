@@ -1,6 +1,6 @@
 {
   "name": "stagehand",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A type-safe library for communicating between JS processes, workers, or other message-passing boundaries.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -22,8 +22,8 @@
     "@types/debug": "^0.0.31",
     "@types/mocha": "^5.2.5",
     "@types/node": "^12.0.0",
-    "@typescript-eslint/parser": "^5.48.0",
     "@typescript-eslint/eslint-plugin": "^5.48.0",
+    "@typescript-eslint/parser": "^5.48.0",
     "chai": "^4.2.0",
     "eslint": "^8.31.0",
     "mocha": "^5.2.0",
