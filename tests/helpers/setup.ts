@@ -23,7 +23,8 @@ function makeProxy<T extends object>() {
   let setTarget = (newTarget: T) => (target = newTarget);
   let clearTarget = () => (target = undefined);
   let proxy = new Proxy<T>({} as T, {
-    get(_, key: keyof T) {
+    get(_, key) {
+      // @ts-expect-error: proxies, man
       return target![key];
     },
   });

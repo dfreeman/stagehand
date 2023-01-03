@@ -7,7 +7,7 @@ const STAGEHAND_INSTANCE = '--stagehand-instance';
  * The remote implementation of a type `T`. It only includes `T`s methods, and the return values
  * of those methods are all made async if they weren't already.
  */
-export type Remote<T> = RemoteType<MethodsOnly<T>> & { [STAGEHAND_INSTANCE]: Stagehand };
+export type Remote<T> = RemoteType<MethodsOnly<T>> & { [STAGEHAND_INSTANCE]: Stagehand<T> };
 
 /**
  * The necessarily implementation type of an intended remote interface `T`. All methods in
@@ -33,7 +33,7 @@ export interface MessageEndpoint {
  * given endpoint and responds to commands that come in over it. This function will typically be
  * called in whatever secondary thread/process will be servicing commands from the primary.
  */
-export async function launch<T>(endpoint: MessageEndpoint, implementation: Implementation<T>): Promise<Stagehand> {
+export async function launch<T>(endpoint: MessageEndpoint, implementation: Implementation<T>): Promise<Stagehand<T>> {
   let stagehand = new Stagehand(implementation);
   stagehand.listen(endpoint);
   return stagehand;
