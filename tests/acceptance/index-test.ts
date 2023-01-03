@@ -12,7 +12,7 @@ describe('Acceptance | end to end exercises', () => {
           return message;
         },
 
-        repeat(message: string, count: number = 1): string[] {
+        repeat(message: string, count = 1): string[] {
           return Array(count).fill(message);
         },
 
