@@ -32,6 +32,30 @@ describe('Acceptance | end to end exercises', () => {
       expect(await worker.hollaback(() => 'hi')).to.equal('HI');
       expect(await worker.hollaback(async () => 'hi')).to.equal('HI');
     });
+
+    it("doesn't leak memory", async function () {
+      this.slow(1_000);
+
+      let iterations = 10;
+      let size = 100_000;
+
+      let memBefore = process.memoryUsage().heapUsed;
+
+      for (let i = 0; i < iterations; i++) {
+        let result = await worker.repeat('hi', size);
+        expect(result.length).to.equal(size);
+      }
+
+      global.gc();
+
+      let memAfter = process.memoryUsage().heapUsed;
+
+      // The allocated arrays should each consume more than `size`, since each array
+      // element requires more than a single byte, but this check is a reasonable
+      // smoke test, and it correctly fails without the fix for the leak reported in
+      // #8 in place.
+      expect(memAfter - memBefore).to.be.lessThan(iterations * size);
+    });
   });
 
   describe('EventEmitter', () => {

@@ -46,8 +46,10 @@ export default class CommandCoordinator<Commands> {
   }
 
   private dispatchResponse<Name extends keyof Commands>(response: Response<Commands, Name>) {
-    let pending = this.pendingDeferred(response);
+    let key = response[RESPONSE];
+    let pending = this.pendingCommands.get(key);
     if (pending !== undefined) {
+      this.pendingCommands.delete(key);
       if (response.error) {
         pending.reject(typeof response.value === 'string' ? new Error(response.value) : response.value);
       } else {
@@ -74,12 +76,6 @@ export default class CommandCoordinator<Commands> {
   private sendMessage(message: unknown) {
     debug('Sending message %o', message);
     this.endpoint.sendMessage(message);
-  }
-
-  private pendingDeferred<Name extends keyof Commands>(
-    response: Response<Commands, Name>
-  ): Deferred<CommandReturn<Commands[Name]>> | undefined {
-    return this.pendingCommands.get(response[RESPONSE]);
   }
 
   private isResponse(message: any): message is Response<Commands, keyof Commands> {

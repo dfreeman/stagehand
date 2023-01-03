@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "prettier --check . && eslint .",
-    "test": "mocha -r ts-node/register 'tests/**/*.ts'",
+    "test": "mocha --expose-gc -r ts-node/register 'tests/**/*.ts'",
     "test:watch": "mocha --watch --watch-extensions ts -r ts-node/register 'tests/**/*.ts'",
     "prepublishOnly": "tsc -p tsconfig.publish.json",
     "postpublish": "rimraf lib"
