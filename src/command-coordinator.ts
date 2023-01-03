@@ -60,11 +60,11 @@ export default class CommandCoordinator<Commands> {
 
   private async dispatchCommand<Name extends keyof Commands>(message: Command<Commands, Name>) {
     let response = { [RESPONSE]: message[COMMAND], error: false, value: undefined as any };
-    let method = (this.executor[message.name] as unknown) as Function;
+    let method = this.executor[message.name] as unknown as (...args: any) => any;
     try {
       let result = await method(...this.handleRegistry.rehydrate(message.args));
       response.value = this.handleRegistry.dehydrate(result);
-    } catch (error) {
+    } catch (error: any) {
       response.error = true;
       response.value = error.message || error;
     }

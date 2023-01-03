@@ -15,24 +15,24 @@ export function endpointForParentProcess(): MessageEndpoint {
   }
 
   return {
-    onMessage: callback => process.addListener('message', callback),
-    sendMessage: message => process.send!(message),
+    onMessage: (callback) => process.addListener('message', callback),
+    sendMessage: (message) => process.send!(message),
     disconnect: () => {
       if (process.connected) {
         process.disconnect();
       }
-    }
+    },
   };
 }
 
 export function endpointForChildProcess(child: ChildProcess): MessageEndpoint {
   return {
-    onMessage: callback => child.addListener('message', callback),
-    sendMessage: message => child.send(message),
+    onMessage: (callback) => child.addListener('message', callback),
+    sendMessage: (message) => child.send(message),
     disconnect: () => {
       if (child.connected) {
         child.disconnect();
       }
-    }
+    },
   };
 }

@@ -11,20 +11,24 @@ interface RemoteArray<T> extends Array<RemoteType<T>> {}
 export type RemoteType<T> = T extends (...args: infer Args) => infer Return
   ? (...args: RemoteFunctionArgs<Args>) => Promise<RemoteType<Awaited<Return>>>
   : T extends Array<infer El>
-    ? RemoteArray<El>
-    : T extends Record<string, any>
-      ? { [K in keyof T]: RemoteType<T[K]> }
-      : T extends any[] ? { [K in keyof T]: RemoteType<T[K]> } : T;
+  ? RemoteArray<El>
+  : T extends Record<string, any>
+  ? { [K in keyof T]: RemoteType<T[K]> }
+  : T extends any[]
+  ? { [K in keyof T]: RemoteType<T[K]> }
+  : T;
 
 type HandlerFunctionArgs<T extends any[]> = { [K in keyof T]: RemoteType<T[K]> };
 interface HandlerArray<T> extends Array<HandlerType<T>> {}
 export type HandlerType<T> = T extends (...args: infer Args) => infer Return
   ? (...args: HandlerFunctionArgs<Args>) => MaybePromise<HandlerType<Awaited<Return>>>
   : T extends Array<infer El>
-    ? HandlerArray<El>
-    : T extends Record<string, any>
-      ? { [K in keyof T]: HandlerType<T[K]> }
-      : T extends any[] ? { [K in keyof T]: HandlerType<T[K]> } : T;
+  ? HandlerArray<El>
+  : T extends Record<string, any>
+  ? { [K in keyof T]: HandlerType<T[K]> }
+  : T extends any[]
+  ? { [K in keyof T]: HandlerType<T[K]> }
+  : T;
 
 // Note: `MakeRemoteType` fails in a known case of functions that return further functions (this is also captured
 // in the tests for this module). The following is a simpler reproduction of the issue:

@@ -1,15 +1,15 @@
 import FunctionHandleRegistry, { Handle } from './function-handle-registry';
-import { MessageEndpoint } from './index';
+import { Implementation, MessageEndpoint } from './index';
 import CommandCoordinator from './command-coordinator';
 
-export default class Stagehand {
+export default class Stagehand<T> {
   private endpoint?: MessageEndpoint;
-  private commandCoordinator?: CommandCoordinator<Stagehand['executor']>;
+  private commandCoordinator?: CommandCoordinator<Stagehand<T>['executor']>;
   private handleRegistry: FunctionHandleRegistry;
-  private implementation?: {} | null;
+  private implementation?: Implementation<T> | null;
 
-  constructor(implementation?: {}) {
-    this.implementation = implementation;
+  constructor(implementation?: Implementation<T>) {
+    this.implementation = implementation ?? null;
     this.handleRegistry = new FunctionHandleRegistry(this.rehydrateRemoteFunction);
   }
 
@@ -109,6 +109,6 @@ export default class Stagehand {
 
     disconnect: () => {
       setTimeout(() => this.shutdown());
-    }
+    },
   };
 }

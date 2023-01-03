@@ -5,7 +5,7 @@ export async function waitUntil<T>(callback: () => T | PromiseLike<T>): Promise<
     if (result) {
       return result;
     } else {
-      await new Promise(resolve => setTimeout(resolve, 5));
+      await new Promise((resolve) => setTimeout(resolve, 5));
     }
   }
   throw new Error('Timeout exceeded for `waitUntil()`');

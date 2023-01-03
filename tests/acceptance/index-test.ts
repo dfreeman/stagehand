@@ -12,14 +12,14 @@ describe('Acceptance | end to end exercises', () => {
           return message;
         },
 
-        repeat(message: string, count: number = 1): string[] {
+        repeat(message: string, count = 1): string[] {
           return Array(count).fill(message);
         },
 
         async hollaback(message: () => Promise<string>): Promise<string> {
           let string = await message();
           return string.toUpperCase();
-        }
+        },
       })
     );
 
@@ -39,10 +39,10 @@ describe('Acceptance | end to end exercises', () => {
     let worker = setupWorker(() => connectLocal(emitter));
 
     it('invokes callbacks both directions', async () => {
-      let localTriggered = new Promise(resolve => worker.once('local', resolve));
+      let localTriggered = new Promise((resolve) => worker.once('local', resolve));
       emitter.emit('local', 'hello from local');
 
-      let remoteTriggered = new Promise(resolve => emitter.once('remote', resolve));
+      let remoteTriggered = new Promise((resolve) => emitter.once('remote', resolve));
       worker.emit('remote', 'hello from remote');
 
       expect(await localTriggered).to.equal('hello from local');

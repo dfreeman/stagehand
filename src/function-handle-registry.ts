@@ -19,7 +19,7 @@ export default class FunctionHandleRegistry {
   constructor(private hydrateRemoteFunction: (handle: Handle) => (...params: unknown[]) => unknown) {}
 
   public dehydrate<T>(root: T): Dehydrated<T> {
-    return walk(root, obj => {
+    return walk(root, (obj) => {
       if (typeof obj === 'function') {
         return dehydrateHandle(this.lookupOrGenerateHandle(obj));
       }
@@ -27,7 +27,7 @@ export default class FunctionHandleRegistry {
   }
 
   public rehydrate<T extends Dehydrated<any>>(root: T): Hydrated<T> {
-    return walk(root, obj => {
+    return walk(root, (obj) => {
       if (isDehydratedHandle(obj)) {
         return this.hydrateRemoteFunction(obj[HANDLE_KEY]);
       }
@@ -67,7 +67,7 @@ export default class FunctionHandleRegistry {
   }
 
   private generateHAndle(): Handle {
-    return (this.nextFunctionHandle++ as unknown) as Handle;
+    return this.nextFunctionHandle++ as unknown as Handle;
   }
 }
 
@@ -90,7 +90,7 @@ function walk<T>(obj: T, handler: (obj: unknown) => unknown | void): any {
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(el => walk(el, handler));
+    return obj.map((el) => walk(el, handler));
   }
 
   if (typeof obj === 'object' && obj) {
