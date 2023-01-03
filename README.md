@@ -1,4 +1,4 @@
-# Stagehand [![Build Status](https://travis-ci.com/dfreeman/stagehand.svg?branch=master)](https://travis-ci.com/dfreeman/stagehand)
+# Stagehand [![CI](https://github.com/dfreeman/stagehand/workflows/CI/badge.svg)](https://github.com/dfreeman/stagehand/actions?query=workflow%3ACI)
 
 Stagehand provides a type-safe means of coordinating communication across an evented message-passing boundary, such as a web worker or a Node.js child process.
 
